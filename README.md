@@ -1,6 +1,6 @@
 # Lasertag
 
-Tag your app version into your CVS with laser speed!
+Match your CVS tags with the android versions in laser speed!
 
 
 ## Usage
