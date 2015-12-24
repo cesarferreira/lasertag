@@ -222,8 +222,8 @@ module Lasertag
       exists = File.exist?(full_path)
 
       unless exists
-        puts "#{full_path.red} could not be found"
-        puts "Try specifying a Flavor".yellow
+        puts "#{full_path.gsub(build_dir,'').yellow} could not be found"
+        puts "   Try specifying a Flavor".green
         exit 1
       end
 
