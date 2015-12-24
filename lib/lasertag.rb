@@ -102,22 +102,35 @@ module Lasertag
       ### Find app info
       app_info = get_app_info
 
-      puts "For package #{app_info[:package].green}"
+      puts "For package #{app_info[:package].yellow}\n"
 
       ### dont let uncommited stuffgit commit
 
 
       ### git tag -a "versionNumber" -m "versionName"
 
-      version = "v#{app_info[:versionName]}"
-      tag = "git tag -a #{version} -m 'versionCode: #{app_info[:versionCode]}'"
+      package = app_info[:package]
+      name = @app_module # not quite correct
+      version = app_info[:versionName]
 
-      puts "Trying to tag #{version}...".yellow
 
-      puts "Tagged #{version}\n".green
+      builded = "#{@app_module}/build/outputs/apk/#{@app_module}-#{@app_flavour}-release-unsigned.apk"
+
+      puts "#{name} #{version} built to #{builded}.".green
+
+      tag = "git tag -a v#{version} -m 'versionCode: #{app_info[:versionCode]}'"
+
+      puts "Tagged v#{version}.".green
+      puts "Pushed git commits and tags.".green
+      puts "Pushed #{name} #{version} to remote.".green
 
 
       ### git push --tags
+
+      # lasertag 0.2.1 built to pkg/lasertag-0.2.1.gem.
+      # Tagged v0.2.1.
+      # Pushed git commits and tags.
+      # Pushed lasertag 0.2.1 to rubygems.org.
     end
 
     def android_home_is_defined
@@ -142,8 +155,7 @@ module Lasertag
       File.exist?(settings_path)
     end
 
-##############
-
+    #########################################################
 
     def convert_values_to_hash (str)
       hash = Hash.new
