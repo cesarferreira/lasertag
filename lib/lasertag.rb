@@ -11,8 +11,8 @@ module Lasertag
 
       # defaults
       @app_path = Dir.pwd
-      @module = nil
-      @flavour = nil
+      @app_module = nil
+      @app_flavour = nil
 
       @require_analyses = true
 
@@ -35,8 +35,12 @@ module Lasertag
           @app_path = app_path if @app_path != '.'
         end
 
-        opts.on('-f', '--flavour FLAVOUR', 'Specifies the flavour (e.g. dev, qa, prod)') do |flavour|
-          @flavour = flavour
+        opts.on('-f', '--flavour FLAVOUR', 'Specifies the flavour (e.g. dev, qa, prod)') do |app_flavour|
+          @app_flavour = app_flavour
+        end
+
+        opts.on('-m', '--module MODULE', 'Specifies the app module') do |app_module|
+          @app_module = app_module
         end
 
         opts.on('-h', '--help', 'Displays help') do
@@ -74,6 +78,46 @@ module Lasertag
         android_project.clear_app_data
       end
 
+      unless @app_module
+        puts "Please give me an app module name".yellow
+        exit 1
+      end
+
+      handle_it_all
+
+    end
+
+    def handle_it_all
+
+      Dir.chdir @app_path
+
+      ### Assemble
+      system assemble_command
+
+      ### Get project properties
+      @hash = project_properties @app_module
+
+      puts "\n"
+
+      ### Find app info
+      app_info = get_app_info
+
+      puts "For package #{app_info[:package].green}"
+
+      ### dont let uncommited stuffgit commit
+
+
+      ### git tag -a "versionNumber" -m "versionName"
+
+      version = "v#{app_info[:versionName]}"
+      tag = "git tag -a #{version} -m 'versionCode: #{app_info[:versionCode]}'"
+
+      puts "Trying to tag #{version}...".yellow
+
+      puts "Tagged #{version}\n".green
+
+
+      ### git push --tags
     end
 
     def android_home_is_defined
@@ -152,16 +196,28 @@ module Lasertag
     def get_path_to_merged_manifest
       build_dir = @hash['buildDir']
 
-      flavor = @flavor ? "/#{@flavor}/" : "/"
+      flavor = @app_flavour ? "/#{@app_flavour}/" : "/"
 
-      full_path = "#{build_dir}/intermediates/manifests/full#{flavor}release/AndroidManifest.xml"
+      path = "#{build_dir}/intermediates/manifests/full"
+      path = "#{path}#{flavor}release/"
+
+      full_path = File.join(path, 'AndroidManifest.xml')
+
+      exists = File.exist?(full_path)
+
+      unless exists
+        puts "#{full_path.red} could not be found"
+        puts "Try specifying a Flavor".yellow
+        exit 1
+      end
+
+
       full_path
     end
 
     def assemble_command
-      "gradle assemble#{(@flavor or "").capitalize}Release"
+      "gradle assemble#{(@app_flavour or "").capitalize}Release"
     end
-
 
   end
 end
