@@ -74,9 +74,9 @@ module Lasertag
         # end
       end
 
-      if @clear_flag
-        android_project.clear_app_data
-      end
+      # if @clear_flag
+      #   android_project.clear_app_data
+      # end
 
       unless @app_module
         puts "Please give me an app module name".yellow
@@ -92,7 +92,12 @@ module Lasertag
       Dir.chdir @app_path
 
       ### Assemble
-      system assemble_command
+      is_success = system assemble_command
+
+      unless is_success
+        puts "\n\nSomething went wrong so I stopped all the madness!!\n".red
+        exit 1
+      end
 
       ### Get project properties
       @hash = project_properties @app_module
@@ -123,7 +128,6 @@ module Lasertag
       puts "Tagged v#{version}.".green
       puts "Pushed git commits and tags.".green
       puts "Pushed #{name} #{version} to remote.".green
-
 
       ### git push --tags
 
@@ -228,7 +232,7 @@ module Lasertag
     end
 
     def assemble_command
-      "gradle assemble#{(@app_flavour or "").capitalize}Release"
+      "gradle :#{@app_module}:assemble#{(@app_flavour or "").capitalize}Release"
     end
 
   end
