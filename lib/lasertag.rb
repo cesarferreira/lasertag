@@ -12,7 +12,7 @@ module Lasertag
       # defaults
       @app_path = Dir.pwd
       @app_module = nil
-      @app_flavour = nil
+      @app_flavor = nil
 
       @require_analyses = true
 
@@ -35,8 +35,8 @@ module Lasertag
           @app_path = app_path if @app_path != '.'
         end
 
-        opts.on('-f', '--flavour FLAVOUR', 'Specifies the flavour (e.g. dev, qa, prod)') do |app_flavour|
-          @app_flavour = app_flavour
+        opts.on('-f', '--flavor FLAVOR', 'Specifies the flavor (e.g. dev, qa, prod)') do |app_flavor|
+          @app_flavor = app_flavor
         end
 
         opts.on('-m', '--module MODULE', 'Specifies the app module') do |app_module|
@@ -119,7 +119,7 @@ module Lasertag
       version = app_info[:versionName]
 
 
-      builded = "#{@app_module}/build/outputs/apk/#{@app_module}-#{@app_flavour}-release-unsigned.apk"
+      builded = "#{@app_module}/build/outputs/apk/#{@app_module}-#{@app_flavor}-release-unsigned.apk"
 
       puts "#{name} #{version} built to #{builded}.".green
 
@@ -212,7 +212,7 @@ module Lasertag
     def get_path_to_merged_manifest
       build_dir = @hash['buildDir']
 
-      flavor = @app_flavour ? "/#{@app_flavour}/" : "/"
+      flavor = @app_flavor ? "/#{@app_flavor}/" : "/"
 
       path = "#{build_dir}/intermediates/manifests/full"
       path = "#{path}#{flavor}release/"
@@ -232,7 +232,7 @@ module Lasertag
     end
 
     def assemble_command
-      "gradle :#{@app_module}:assemble#{(@app_flavour or "").capitalize}Release"
+      "gradle :#{@app_module}:assemble#{(@app_flavor or "").capitalize}Release"
     end
 
   end

@@ -7,9 +7,9 @@ Match your CVS tags with the android versions in laser speed!
 
     $ lasertag -m app
 
-If you want to specify a flavour:
+If you want to specify a flavor:
 
-    $ lasertag --module app --flavour prod
+    $ lasertag --module app --flavor prod
 
 
 ## Installation
