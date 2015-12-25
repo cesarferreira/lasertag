@@ -1,7 +1,7 @@
 # Lasertag
-[![Build Status](https://travis-ci.org/cesarferreira/lasertag.svg?branch=master)](https://travis-ci.org/cesarferreira/lasertag) [![Gem Version](https://badge.fury.io/rb/lasertag.svg)](https://badge.fury.io/rb/lasertag)
+[![Gem Version](https://badge.fury.io/rb/lasertag.svg)](https://badge.fury.io/rb/lasertag) [![Build Status](https://travis-ci.org/cesarferreira/lasertag.svg?branch=master)](https://travis-ci.org/cesarferreira/lasertag)  [![security](https://hakiri.io/github/cesarferreira/lasertag/master.svg)](https://hakiri.io/github/cesarferreira/lasertag/master) [![Code Climate](https://codeclimate.com/github/cesarferreira/lasertag/badges/gpa.svg)](https://codeclimate.com/github/cesarferreira/lasertag)
 
-> Match your CVS tags with the android versions in laser speed!
+> Match your CVS tags with the android versions with laser speed!
 
 *[INSERT GIF HERE]*
 
@@ -19,7 +19,7 @@ If you want to specify a flavor:
 ## What happens?
 
 - Tries to compile the project
-- Find out the pacakge and the version
+- Find out the package and the version
 - executes git tag -a v[tag_version] -m "tag [tag_name]"
 - executes git push origin
 - executes git push origin [tag_name]
