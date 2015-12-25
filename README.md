@@ -1,10 +1,9 @@
-# Lasertag [![Gem Version](https://badge.fury.io/rb/lasertag.svg)](https://badge.fury.io/rb/lasertag)
+# Lasertag
+[![Build Status](https://travis-ci.org/cesarferreira/lasertag.svg?branch=master)](https://travis-ci.org/cesarferreira/lasertag) [![Gem Version](https://badge.fury.io/rb/lasertag.svg)](https://badge.fury.io/rb/lasertag)
 
 > Match your CVS tags with the android versions in laser speed!
 
 *[INSERT GIF HERE]*
-
-Automate a versioning process that follows semantic versioning.
 
 
 ## Basic Usage

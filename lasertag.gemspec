@@ -14,8 +14,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["cesarferreira"]
   spec.email         = ["cesar.manuel.ferreira@gmail.com"]
 
-  spec.summary       = %q{Match your CVS tags with the android versions in laser speed!}
-  spec.description   = %q{Match your CVS tags with the android versions in laser speed!}
+  spec.summary       = %q{Automatically map android app version to git tags}
+  spec.description   = %q{Automatically map android app version to git tags}
   spec.homepage      = "https://github.com/cesarferreira/lasertag"
   spec.license       = "MIT"
 
