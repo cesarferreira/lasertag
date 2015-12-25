@@ -3,6 +3,7 @@ require 'colorize'
 require 'hirb'
 require 'oga'
 require 'lasertag/version'
+require 'git'
 require 'pry'
 
 module Lasertag
@@ -91,6 +92,12 @@ module Lasertag
 
       Dir.chdir @app_path
 
+      ### dont let uncommited stuffgit commit
+      if has_uncommited_code
+        puts "You have uncommited code, please commit it first".red
+        exit 1
+      end
+
       ### Assemble
       is_success = system assemble_command
 
@@ -108,8 +115,6 @@ module Lasertag
       app_info = get_app_info
 
       puts "For package #{app_info[:package].yellow}\n"
-
-      ### dont let uncommited stuffgit commit
 
 
       ### git tag -a "versionNumber" -m "versionName"
@@ -129,12 +134,11 @@ module Lasertag
       puts "Pushed git commits and tags.".green
       puts "Pushed #{name} #{version} to remote.".green
 
-      ### git push --tags
+    end
 
-      # lasertag 0.2.1 built to pkg/lasertag-0.2.1.gem.
-      # Tagged v0.2.1.
-      # Pushed git commits and tags.
-      # Pushed lasertag 0.2.1 to rubygems.org.
+    def has_uncommited_code
+      g = Git.open(Dir.pwd)
+      g.status.changed.size > 0
     end
 
     def android_home_is_defined
