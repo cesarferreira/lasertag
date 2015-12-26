@@ -10,11 +10,20 @@
 </p>
 
 
-## Basic Usage
+## Usage
+
+This will extract the android's app module `version` and create a matching `git tag`.
 
     $ lasertag --module [module_name]
 
-This will extract the android's app module `version` and create a matching `git tag`.
+
+
+<b>A bit more complex usage:</b>
+
+```bash
+$ lasertag --path ~/Project --module app --flavor prod --remote origin
+```
+
 
 ## Handy in
 
@@ -25,17 +34,20 @@ Pretty handy in situations like the most used git workflow, the [Gitflow Workflo
 </p>
 
 ## Full usage
+```bash
 
-    Usage: lasertag [OPTIONS]
+Usage: lasertag [OPTIONS]
 
-    Options
-      -m, --module MODULE    # Specifies the app module
-      -f, --flavor FLAVOR    # Specifies the flavor (e.g. dev, qa, prod)
-      -p, --path PATH        # Custom path to android project
-      -r, --remote REMOTE    # Custom remote to your project (default: "origin")
-      -h, --help             # Displays help
-      -v, --version          # Displays version
+Options
+  -m, --module MODULE    # Specifies the app module
+  -f, --flavor FLAVOR    # Specifies the flavor (e.g. dev, qa, prod)
+  -p, --path PATH        # Custom path to android project
+  -d, --dont-push        # Only tags the code, doesn't push it upstream
+  -r, --remote REMOTE    # Custom remote to your project (default: "origin")
+  -h, --help             # Displays help
+  -v, --version          # Displays version
 
+```
 
 ## Installation
 
@@ -48,7 +60,7 @@ Pretty handy in situations like the most used git workflow, the [Gitflow Workflo
 - executes git tag -a v[tag_version] -m "tag [tag_name]"
 - executes git push origin [tag_name]
 
-when a step fails, it stops the whole process.
+Whenever a step fails, it stops the whole process and rolls it back.
 
 ## License
 

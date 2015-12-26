@@ -13,6 +13,7 @@ module Lasertag
       @app_module = nil
       @app_flavor = nil
       @app_remote = 'origin'
+      @allow_push = true
 
       @require_analyses = true
 
@@ -45,6 +46,10 @@ module Lasertag
 
         opts.on('-r REMOTE', '--remote REMOTE', 'Custom remote to your project (default: "origin")') do |app_remote|
           @app_remote = app_remote
+        end
+
+        opts.on('-d', '--dont-push', 'Only tags the code, doesn\'t push it upstream') do |dont|
+          @allow_push = false
         end
 
         opts.on('-h', '--help', 'Displays help') do
@@ -127,6 +132,10 @@ module Lasertag
 
       tag_code "v#{version}"
       puts "Tagged v#{version}.".green
+
+      unless @allow_push
+        exit 1
+      end
 
       #$ git push origin v1.5
       push_tag "v#{version}"
