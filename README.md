@@ -6,7 +6,7 @@
 <!-- Match your CVS tags with your android versions with laser speed! -->
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/cesarferreira/lasertag/master/extras/terminal.gif" width="100%" />
+<img src="https://raw.githubusercontent.com/cesarferreira/lasertag/master/extras/terminal.gif" />
 </p>
 
 
@@ -14,11 +14,22 @@
 
     $ lasertag --module [module_name]
 
-#### Going deeper
+This will extract the android's app module `version` and create a matching `git tag`
 
-If you want to specify a flavor:
+<p align="center">
+<img src="https://raw.githubusercontent.com/cesarferreira/lasertag/master/extras/gitflow.png" />
+</p>
 
-    $ lasertag --module app --flavor prod
+#### Help
+
+    Usage: lasertag [OPTIONS]
+
+    Options
+      -m, --module MODULE    # Specifies the app module
+      -f, --flavor FLAVOR    # Specifies the flavor (e.g. dev, qa, prod)
+      -p, --path PATH        # Custom path to android project
+      -h, --help             # Displays help
+      -v, --version          # Displays version
 
 
 ## Installation
