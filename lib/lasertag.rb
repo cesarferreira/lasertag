@@ -165,7 +165,7 @@ module Lasertag
     def tag_code(version)
       g = Git.open(Dir.pwd)
       begin
-        g.add_tag(version)
+        g.add_tag(version, {:message => "Version #{version.gsub(/^v/, "")}"})
       rescue Exception => e
         expected = "'#{version}' already exists"
         if e.to_s.include? expected
@@ -200,8 +200,6 @@ module Lasertag
     def is_valid(settings_path = @settings_gradle_path)
       File.exist?(settings_path)
     end
-
-    #########################################################
 
     def convert_values_to_hash (str)
       hash = Hash.new
