@@ -29,6 +29,7 @@ Pretty helpful in situations like my personal choice of git workflow, the [Gitfl
       -m, --module MODULE    # Specifies the app module
       -f, --flavor FLAVOR    # Specifies the flavor (e.g. dev, qa, prod)
       -p, --path PATH        # Custom path to android project
+      -r, --remote REMOTE    # Custom remote to your project (default: "origin")
       -h, --help             # Displays help
       -v, --version          # Displays version
 
@@ -44,6 +45,7 @@ Pretty helpful in situations like my personal choice of git workflow, the [Gitfl
 - executes git tag -a v[tag_version] -m "tag [tag_name]"
 - executes git push origin [tag_name]
 
+when a step fails, it stops the whole process.
 
 ## License
 

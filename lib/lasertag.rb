@@ -12,6 +12,7 @@ module Lasertag
       @app_path = Dir.pwd
       @app_module = nil
       @app_flavor = nil
+      @app_remote = 'origin'
 
       @require_analyses = true
 
@@ -40,6 +41,10 @@ module Lasertag
 
         opts.on('-p PATH', '--path PATH', 'Custom path to android project') do |app_path|
           @app_path = app_path if @app_path != '.'
+        end
+
+        opts.on('-r REMOTE', '--remote REMOTE', 'Custom remote to your project (default: "origin")') do |app_remote|
+          @app_remote = app_remote
         end
 
         opts.on('-h', '--help', 'Displays help') do
@@ -139,16 +144,22 @@ module Lasertag
     end
 
     ### PUSH TAG
-    def push_tag(version)
+    def push_tag(tag)
       g = Git.open(Dir.pwd)
       begin
-        g.push(g.remote('origin'), version)
+        g.push(g.remote(@app_remote), tag)
       rescue Exception => e
         puts "Can't push tag\n reason: #{e.to_s.red}"
+        delete_tag tag
         exit 1
       end
     end
 
+    ### DELETE TAG
+    def delete_tag(tag)
+      g = Git.open(Dir.pwd)
+      g.delete_tag(tag)
+    end
 
     ### TAG CODE
     def tag_code(version)
