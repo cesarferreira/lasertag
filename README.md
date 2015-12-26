@@ -15,13 +15,16 @@
     $ lasertag --module [module_name]
 
 This will extract the android's app module `version` and create a matching `git tag`.
-Pretty helpful in situations like my personal choice of git workflow, the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow), a strict branching model designed around the project release:
+
+## Handy in
+
+Pretty handy in situations like the most used git workflow, the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow), a strict branching model designed around the project release:
 
 <p align="center">
 <img src="extras/gitflow.png" />
 </p>
 
-#### Help
+## Full usage
 
     Usage: lasertag [OPTIONS]
 
