@@ -1,7 +1,9 @@
 # Lasertag
 [![Gem Version](https://badge.fury.io/rb/lasertag.svg)](https://badge.fury.io/rb/lasertag) [![Build Status](https://travis-ci.org/cesarferreira/lasertag.svg?branch=master)](https://travis-ci.org/cesarferreira/lasertag)  [![security](https://hakiri.io/github/cesarferreira/lasertag/master.svg)](https://hakiri.io/github/cesarferreira/lasertag/master) [![Code Climate](https://codeclimate.com/github/cesarferreira/lasertag/badges/gpa.svg)](https://codeclimate.com/github/cesarferreira/lasertag) [![Inline docs](http://inch-ci.org/github/cesarferreira/lasertag.svg?branch=master)](http://inch-ci.org/github/cesarferreira/lasertag)
 
-> Match your CVS tags with the android versions with laser speed!
+> Like most VCSs, Git has the ability to tag specific points in history as being important. Typically people use this functionality to mark release points (v1.0.0, and so on)
+
+<!-- Match your CVS tags with your android versions with laser speed! -->
 
 *[INSERT GIF HERE]*
 
@@ -16,6 +18,11 @@ If you want to specify a flavor:
 
     $ lasertag --module app --flavor prod
 
+
+## Installation
+
+    $ gem install lasertag
+
 ## Under the hood
 
 - Tries to compile the project
@@ -24,10 +31,6 @@ If you want to specify a flavor:
 - executes git push origin
 - executes git push origin [tag_name]
 
-
-## Installation
-
-    $ gem install lasertag
 
 ## License
 

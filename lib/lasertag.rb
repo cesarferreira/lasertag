@@ -32,16 +32,16 @@ module Lasertag
         opts.separator  ''
         opts.separator  "Options"
 
-        opts.on('-p PATH', '--path PATH', 'Custom path to android project') do |app_path|
-          @app_path = app_path if @app_path != '.'
+        opts.on('-m', '--module MODULE', 'Specifies the app module') do |app_module|
+          @app_module = app_module
         end
 
         opts.on('-f', '--flavor FLAVOR', 'Specifies the flavor (e.g. dev, qa, prod)') do |app_flavor|
           @app_flavor = app_flavor
         end
 
-        opts.on('-m', '--module MODULE', 'Specifies the app module') do |app_module|
-          @app_module = app_module
+        opts.on('-p PATH', '--path PATH', 'Custom path to android project') do |app_path|
+          @app_path = app_path if @app_path != '.'
         end
 
         opts.on('-h', '--help', 'Displays help') do
@@ -74,10 +74,6 @@ module Lasertag
         #   exit
         # end
       end
-
-      # if @clear_flag
-      #   android_project.clear_app_data
-      # end
 
       unless @app_module
         puts "Please give me an app module name".yellow
@@ -116,31 +112,65 @@ module Lasertag
 
       puts "For package #{app_info[:package].yellow}\n"
 
-
       ### git tag -a "versionNumber" -m "versionName"
 
       package = app_info[:package]
       name = @app_module # not quite correct
       version = app_info[:versionName]
 
-
-      builded = "#{@app_module}/build/outputs/apk/#{@app_module}-#{@app_flavor}-release-unsigned.apk"
+      builded = "#{@app_module}/build/outputs/apk/#{@app_module}#{"-#{@app_flavor}" if @app_flavor}-release-unsigned.apk"
 
       puts "#{name} #{version} built to #{builded}.".green
 
-      tag = "git tag -a v#{version} -m 'versionCode: #{app_info[:versionCode]}'"
-
+      tag_code "v#{version}"
       puts "Tagged v#{version}.".green
+
+      #$ git push origin v1.5
+      push_tag "v#{version}"
+
       puts "Pushed git commits and tags.".green
       puts "Pushed #{name} #{version} to remote.".green
 
     end
 
+
+
+    ### HAS UNCOMMITED CODE?
     def has_uncommited_code
       g = Git.open(Dir.pwd)
       g.status.changed.size > 0
     end
 
+    ### PUSH TAG
+    def push_tag(version)
+      g = Git.open(Dir.pwd)
+      begin
+        g.push(g.remote('origin'), version)
+      rescue Exception => e
+        puts "Can't push tag\n reason: #{e.to_s.red}"
+        exit 1
+      end
+    end
+
+
+    ### TAG CODE
+    def tag_code(version)
+      g = Git.open(Dir.pwd)
+      begin
+        g.add_tag(version)
+      rescue Exception => e
+        expected = "'#{version}' already exists"
+        if e.to_s.include? expected
+          puts "Error ocurred: #{expected.red}"
+        else
+          puts "Can't tag the code\n reason: #{e.to_s.red}"
+        end
+
+        exit 1
+      end
+    end
+
+    ### IS THE ANDROID HOME DEFINED?
     def android_home_is_defined
       sdk = `echo $ANDROID_HOME`.gsub("\n",'')
       !sdk.empty?
@@ -187,9 +217,7 @@ module Lasertag
       project = "#{project}:" if project
 
       result = %x[gradle #{project}properties]
-      hash = convert_values_to_hash result
-      #puts Hirb::Helpers::AutoTable.render(hash)
-      hash
+      convert_values_to_hash result
     end
 
 
@@ -199,9 +227,6 @@ module Lasertag
 
       parser = Oga.parse_xml(handle)
 
-      #  package="com.cesarferreira.testout"
-      #  versionCode="10000"
-      #  versionName="1.0.0"
       package     = parser.xpath("//manifest").attr('package').last.value
       versionCode = parser.xpath("//manifest").attr('android:versionCode').last.value
       versionName = parser.xpath("//manifest").attr('android:versionName').last.value
@@ -226,7 +251,7 @@ module Lasertag
       exists = File.exist?(full_path)
 
       unless exists
-        puts "#{full_path.gsub(build_dir,'').yellow} could not be found"
+        puts "#{full_path.gsub(build_dir,'').yellow} could not be found\n"
         puts "   Try specifying a Flavor".green
         exit 1
       end
