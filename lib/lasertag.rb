@@ -1,10 +1,8 @@
 require 'optparse'
 require 'colorize'
-require 'hirb'
 require 'oga'
 require 'lasertag/version'
 require 'git'
-require 'pry'
 
 module Lasertag
   class MainApp
@@ -134,7 +132,6 @@ module Lasertag
     end
 
 
-
     ### HAS UNCOMMITED CODE?
     def has_uncommited_code
       g = Git.open(Dir.pwd)
@@ -251,8 +248,9 @@ module Lasertag
       exists = File.exist?(full_path)
 
       unless exists
-        puts "#{full_path.gsub(build_dir,'').yellow} could not be found\n"
-        puts "   Try specifying a Flavor".green
+        puts "The merged manifest could not be found\n"
+        puts "   Try specifying a Flavor\n".green
+        system("lasertag -h")
         exit 1
       end
 

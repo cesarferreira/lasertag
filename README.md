@@ -5,7 +5,9 @@
 
 <!-- Match your CVS tags with your android versions with laser speed! -->
 
-*[INSERT GIF HERE]*
+<p align="center">
+<img src="https://raw.githubusercontent.com/cesarferreira/lasertag/master/extras/terminal.gif" width="100%" />
+</p>
 
 
 ## Basic Usage
@@ -28,7 +30,6 @@ If you want to specify a flavor:
 - Tries to compile the project
 - Find out the package and the app version
 - executes git tag -a v[tag_version] -m "tag [tag_name]"
-- executes git push origin
 - executes git push origin [tag_name]
 
 
