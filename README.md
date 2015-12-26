@@ -6,7 +6,7 @@
 <!-- Match your CVS tags with your android versions with laser speed! -->
 
 <p align="center">
-<img src="extras/terminal.gif" width="100%" />
+<img src="extras/terminal.gif" />
 </p>
 
 
