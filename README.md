@@ -24,9 +24,6 @@ This will extract the android's app module `version` and create a matching `git 
 $ lasertag --path ~/Project --module app --flavor prod --remote origin
 ```
 
-> $ lasertag --path <b>~/Project</b> --module app --flavor prod --remote origin
-
-
 ## Handy in
 
 Pretty handy in situations like the most used git workflow, the [Gitflow Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow), a strict branching model designed around the project release:
