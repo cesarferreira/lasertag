@@ -24,6 +24,8 @@ This will extract the android's app module `version` and create a matching `git 
 $ lasertag --path ~/Project --module app --flavor prod --remote origin
 ```
 
+> $ lasertag --path <b>~/Project</b> --module app --flavor prod --remote origin
+
 
 ## Handy in
 

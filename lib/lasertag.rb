@@ -25,6 +25,7 @@ module Lasertag
 
     end
 
+    ### Options parser
     def create_options_parser(args)
 
       args.options do |opts|
@@ -67,36 +68,16 @@ module Lasertag
       end
     end
 
-    ##
-    ## Manage options
-    ##
+    ### Manage options
     def manage_opts
-
-      if @require_analyses
-        # instatiate android project
-        # android_project = AndroidProject.new(@app_path)
-
-        # # is a valid android project?
-        # unless android_project.is_valid
-        #   puts "#{@app_path.red} is not a valid android project"
-        #   exit
-        # end
-      end
 
       unless @app_module
         puts "Please give me an app module name".yellow
         exit 1
       end
 
-      handle_it_all
-
-    end
-
-    def handle_it_all
-
       Dir.chdir @app_path
 
-      ### dont let uncommited stuffgit commit
       if has_uncommited_code
         puts "You have uncommited code, please commit it first".red
         exit 1
@@ -113,12 +94,10 @@ module Lasertag
       ### Get project properties
       @hash = project_properties @app_module
 
-      puts "\n"
-
       ### Find app info
       app_info = get_app_info
 
-      puts "For package #{app_info[:package].yellow}\n"
+      puts "\nFor package #{app_info[:package].yellow}\n"
 
       ### git tag -a "versionNumber" -m "versionName"
 
@@ -137,7 +116,7 @@ module Lasertag
         exit 1
       end
 
-      #$ git push origin v1.5
+      #$ git push origin v#{version}
       push_tag "v#{version}"
 
       puts "Pushed git commits and tags.".green
@@ -202,14 +181,8 @@ module Lasertag
       end
     end
 
-    def settings_gradle_file(path = @base_path)
-      File.join(path, 'settings.gradle')
-    end
 
-    def is_valid(settings_path = @settings_gradle_path)
-      File.exist?(settings_path)
-    end
-
+    ### Convert the app info to an hash
     def convert_values_to_hash (str)
       hash = Hash.new
 
@@ -227,6 +200,7 @@ module Lasertag
       hash
     end
 
+    ### Get the project properties
     def project_properties(project=nil)
 
       project = "#{project}:" if project
@@ -236,6 +210,7 @@ module Lasertag
     end
 
 
+    ### Get the app info
     def get_app_info
       path = get_path_to_merged_manifest
       handle = File.open(path)
@@ -253,6 +228,7 @@ module Lasertag
       }
     end
 
+    ### Path to the merged manifest
     def get_path_to_merged_manifest
       build_dir = @hash['buildDir']
 
@@ -276,6 +252,7 @@ module Lasertag
       full_path
     end
 
+    ### Assemble command
     def assemble_command
       "gradle :#{@app_module}:assemble#{(@app_flavor or "").capitalize}Release"
     end
