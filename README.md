@@ -52,6 +52,14 @@ Options
 
     $ gem install lasertag
 
+## Ubuntu
+
+This tool requires a working Gradle distribution and currently does not make use of the Gradle wrapper bundled with the Android project. To install Gradle,
+
+    apt-get install gradle
+
+This applies for other linux distros as well.
+
 ## Under the hood
 
 - Tries to compile the project
