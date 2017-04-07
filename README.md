@@ -1,8 +1,8 @@
 # Lasertag
 
 ![](http://ruby-gem-downloads-badge.herokuapp.com/lasertag?type=total)
-[![Gem Version](https://badge.fury.io/rb/lasertag.svg)](https://badge.fury.io/rb/lasertag) 
-[![Build Status](https://travis-ci.org/cesarferreira/lasertag.svg?branch=master)
+[![Gem Version](https://badge.fury.io/rb/lasertag.svg)](https://badge.fury.io/rb/lasertag)
+[![Build Status](https://travis-ci.org/cesarferreira/lasertag.svg?branch=master)](https://travis-ci.org/cesarferreira/lasertag)
 
 > Like most VCSs, Git has the ability to tag specific points in history as being important. Typically people use this functionality to mark release points (v1.0.0, and so on)
 
